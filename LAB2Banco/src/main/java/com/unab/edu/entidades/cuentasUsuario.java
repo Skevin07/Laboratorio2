@@ -5,14 +5,16 @@
  */
 package com.unab.edu.entidades;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  *
  * @author Roberto
  */
 public class cuentasUsuario {
+    private int idcuenta;
     private float saldo;
     private int transaccion;
-
+    private int idUsuario;
+    private Date fecha;
 }

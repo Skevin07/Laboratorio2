@@ -10,5 +10,6 @@ package com.unab.edu.entidades;
  * @author Roberto
  */
 public class tipoUsuario {
+    private int id;
     private String tipoUsuario;
 }

@@ -17,4 +17,5 @@ public class usuario {
     private int idUsuario;
     private String Usuario;
     private String Pass;
+    private int tipoUsuario;
 }
