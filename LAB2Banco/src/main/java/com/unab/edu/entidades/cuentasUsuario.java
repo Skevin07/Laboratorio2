@@ -6,11 +6,13 @@
 package com.unab.edu.entidades;
 
 import java.util.Date;
+import lombok.Data;
 
 /**
  *
  * @author Roberto
  */
+@Data
 public class cuentasUsuario {
     private int idcuenta;
     private float saldo;
