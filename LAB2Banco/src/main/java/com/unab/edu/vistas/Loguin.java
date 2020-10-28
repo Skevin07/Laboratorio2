@@ -182,14 +182,14 @@ public class Loguin extends javax.swing.JFrame {
                 usu=user;
                 if (user.getTipoUsuario() == 1) {
                     
-                    Admin formAbonos = new Admin();
-                    formAbonos.setVisible(true);
+                    Admin admin = new Admin();
+                    admin.setVisible(true);
                     this.hide();
                 } else if(user.getTipoUsuario() == 2){
                     
                     
-                    Usuario formCargos = new Usuario();
-                    formCargos.setVisible(true);
+                    Usuario usuar = new Usuario();
+                    usuar.setVisible(true);
                     this.hide();
                 }
             } else {
