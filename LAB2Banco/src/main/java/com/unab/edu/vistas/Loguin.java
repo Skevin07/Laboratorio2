@@ -5,6 +5,10 @@
  */
 package com.unab.edu.vistas;
 
+import com.unab.edu.DAO.clsUsuario;
+import com.unab.edu.entidades.usuario;
+import javax.swing.JOptionPane;
+
 
 
 /**
@@ -13,15 +17,17 @@ package com.unab.edu.vistas;
  */
 public class Loguin extends javax.swing.JFrame {
 
+     public static usuario usu;
     /**
      * Creates new form Loguin
      */
     public Loguin() {
         initComponents();
-        
+        setLocationRelativeTo(this);
         
     }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,14 +37,17 @@ public class Loguin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         lblUsuario = new java.awt.Label();
         lblContra = new java.awt.Label();
         btnIngresar = new java.awt.Button();
         txtContra = new javax.swing.JPasswordField();
         txtUsuario = new javax.swing.JTextField();
         lblPicture = new javax.swing.JLabel();
-        cbxLoguin = new javax.swing.JComboBox<>();
         lblBienvenida = new javax.swing.JLabel();
+        ADMN = new javax.swing.JRadioButton();
+        USU = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -53,19 +62,39 @@ public class Loguin extends javax.swing.JFrame {
         btnIngresar.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 12)); // NOI18N
         btnIngresar.setLabel("INGRESAR");
         btnIngresar.setName("INGRESAR"); // NOI18N
+        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresarActionPerformed(evt);
+            }
+        });
 
         txtContra.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         txtContra.setToolTipText("");
+        txtContra.setEchoChar('*');
         txtContra.setName(""); // NOI18N
 
         txtUsuario.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
 
         lblPicture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/user.png"))); // NOI18N
 
-        cbxLoguin.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         lblBienvenida.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblBienvenida.setText("BANCO CENTRAL SALVADOREÑO");
+
+        ADMN.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        ADMN.setText("Administrador");
+        ADMN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ADMNActionPerformed(evt);
+            }
+        });
+
+        USU.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        USU.setText("Usuario");
+        USU.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                USUActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -74,36 +103,42 @@ public class Loguin extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(133, 133, 133)
-                        .addComponent(lblUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(28, 28, 28)
+                        .addComponent(lblBienvenida))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(88, 88, 88)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(ADMN)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(USU))
                             .addComponent(txtContra)
-                            .addComponent(txtUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                            .addComponent(cbxLoguin, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(123, 123, 123)
-                        .addComponent(lblContra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(113, 113, 113)
-                        .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(102, 102, 102)
-                        .addComponent(lblPicture))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(lblBienvenida)))
+                            .addComponent(txtUsuario))))
                 .addContainerGap(24, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(139, 139, 139))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblContra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(121, 121, 121))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblPicture)
+                        .addGap(103, 103, 103))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(117, 117, 117))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblBienvenida)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(lblPicture, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(1, 1, 1)
                 .addComponent(lblUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -111,15 +146,68 @@ public class Loguin extends javax.swing.JFrame {
                 .addComponent(lblContra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtContra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cbxLoguin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ADMN)
+                    .addComponent(USU))
+                .addGap(19, 19, 19)
                 .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
+        clsUsuario usuario = new clsUsuario();
+        usuario usu = new usuario();
+        usu.setUsuario(txtUsuario.getText());
+        usu.setPass(txtContra.getText());
+        int tipo = 0;
+        if (!usu.getUsuario().isEmpty() && !usu.getPass().isEmpty()) {
+            if (USU.isSelected()) {
+                tipo = 2;
+            } else if (ADMN.isSelected()) {
+                tipo = 1;
+            }
+            if (tipo != 0) {
+                usu.setTipoUsuario(tipo);
+                usuario user= new usuario();
+                user=usuario.Login(usu);
+                if(user.getUsuario()!=null){
+                    JOptionPane.showMessageDialog(null, "Welcome " + user.getUsuario());
+                }else{
+                    JOptionPane.showMessageDialog(null, "No se encontró el usuario");
+                }
+                usu=user;
+                if (user.getTipoUsuario() == 1) {
+                    
+                    Admin formAbonos = new Admin();
+                    formAbonos.setVisible(true);
+                    this.hide();
+                } else if(user.getTipoUsuario() == 2){
+                    
+                    
+                    Usuario formCargos = new Usuario();
+                    formCargos.setVisible(true);
+                    this.hide();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "llena los campos");
+            }
+        } else {
+
+            JOptionPane.showMessageDialog(null, "llena los campos");
+        }
+    }//GEN-LAST:event_btnIngresarActionPerformed
+
+    private void ADMNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADMNActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ADMNActionPerformed
+
+    private void USUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_USUActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_USUActionPerformed
 
     /**
      * @param args the command line arguments
@@ -157,8 +245,11 @@ public class Loguin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton ADMN;
+    private javax.swing.JRadioButton USU;
     private java.awt.Button btnIngresar;
-    private javax.swing.JComboBox<String> cbxLoguin;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JLabel lblBienvenida;
     private java.awt.Label lblContra;
     private javax.swing.JLabel lblPicture;

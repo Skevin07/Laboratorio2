@@ -35,7 +35,7 @@ public class Usuario extends javax.swing.JFrame {
         String TITULOS[] = {"SALDO", "TRANSACCIÓN", "FECHA"};
         DefaultTableModel modeloTabla = new DefaultTableModel(null, TITULOS);
         cuentasUsuario transaccion = new cuentasUsuario();
-        var listado = transaccion.Transacciones(user);
+        var listado = transaccion.transaccion(user);
         String filas[] = new String[3];
         double abonos = 0;
         double cargos = 0;
@@ -217,7 +217,7 @@ public class Usuario extends javax.swing.JFrame {
 
     boolean esNumero;
         double retiro = 0;
-        clsUsuario transaccionDao = new clsUsuario();
+        clsUsuario transacciones = new clsUsuario();
         cuentasUsuario transaccion = new cuentasUsuario();
         try {
             retiro = Double.parseDouble(txtRetiro.getText());
@@ -239,7 +239,7 @@ public class Usuario extends javax.swing.JFrame {
                     transaccion.setSaldo(retiro);
                     transaccion.setIdUsuario(user.getIdUsuario());
                     transaccion.setTransaccion(2);
-                    transaccionDao.agregarTransaccion(transaccion);
+                    transacciones.agregarTransaccion(transaccion);
                     MostrarTransaccion();
                     txtRetiro.setText("");
                 } else {
