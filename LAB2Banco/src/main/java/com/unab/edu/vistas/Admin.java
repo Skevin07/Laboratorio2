@@ -5,6 +5,18 @@
  */
 package com.unab.edu.vistas;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import javax.swing.DefaultComboBoxModel;
+import com.unab.edu.entidades.cuentasUsuario;
+import com.unab.edu.entidades.usuario;
+import com.unab.edu.dao.clsUsuario;
+import com.unab.edu.dao.clscuentausuario;
+import java.util.function.ToDoubleFunction;
+import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author landa
@@ -14,10 +26,44 @@ public class Admin extends javax.swing.JFrame {
     /**
      * Creates new form Admin
      */
+    
+    usuario user;
+    
     public Admin() {
-        initComponents();
+        initComponents();  
+        Calendar Cal = Calendar.getInstance();
+        jDateChooser1.setCalendar(Cal);
+        DisplayMember();
+         
+    }
+    
+    String ValueMember[];
+    int contador = 1;
+
+    void DisplayMember() {
+        DefaultComboBoxModel cbde = new DefaultComboBoxModel();
+        clsUsuario usua = new clsUsuario();
+        ArrayList<usuario> users = usua.TraerUsuarios();
+        ValueMember = new String[users.size() + 1];
+        
+        String filas[] = new String[5];
+        cbde.addElement("");
+        for (var iterarDatosusuario : users) {
+            
+            filas[0] = String.valueOf(iterarDatosusuario.getIdUsuario());
+            filas[1] = iterarDatosusuario.getUsuario();
+            ValueMember[contador] = filas[0];
+            cbdefault.addElement(filas[1]);
+            contador++;
+            
+        }
+        
+        cbxDepositante.setModel(cbdefault);
         
     }
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -33,10 +79,10 @@ public class Admin extends javax.swing.JFrame {
         lblAbono = new javax.swing.JLabel();
         txtAbono = new javax.swing.JTextField();
         lblAbono1 = new javax.swing.JLabel();
-        cbxUsuarios = new javax.swing.JComboBox<>();
+        cbxDepositante = new javax.swing.JComboBox<>();
         lblAbono2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
         btnAbonar = new javax.swing.JButton();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -53,12 +99,10 @@ public class Admin extends javax.swing.JFrame {
         lblAbono1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         lblAbono1.setText("FECHA");
 
-        cbxUsuarios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxDepositante.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         lblAbono2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         lblAbono2.setText("Depositante :");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnAbonar.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         btnAbonar.setText("ABONAR");
@@ -73,23 +117,16 @@ public class Admin extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblPicture1)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblAbono2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(29, 29, 29)
-                                        .addComponent(cbxUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblAbono, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtAbono, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 49, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(lblAbono1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblAbono, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblAbono1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblAbono2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(cbxDepositante, 0, 186, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+                                .addComponent(txtAbono)))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -110,17 +147,17 @@ public class Admin extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(lblPicture1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGap(46, 46, 46)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblAbono1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(30, 30, 30)
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(29, 29, 29)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblAbono)
                             .addComponent(txtAbono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cbxUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbxDepositante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblAbono2, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addComponent(btnAbonar)
@@ -167,8 +204,8 @@ public class Admin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAbonar;
-    private javax.swing.JComboBox<String> cbxUsuarios;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> cbxDepositante;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel lblAbono;
     private javax.swing.JLabel lblAbono1;
     private javax.swing.JLabel lblAbono2;
