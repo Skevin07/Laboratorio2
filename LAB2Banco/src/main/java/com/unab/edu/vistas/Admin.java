@@ -44,6 +44,8 @@ public class Admin extends javax.swing.JFrame {
     int contador = 1;
 
     void DisplayMember() {
+        setLocationRelativeTo(this);
+        Date date = new Date();
         DefaultComboBoxModel cbde = new DefaultComboBoxModel();
         clsUsuario usua = new clsUsuario();
         ArrayList<usuario> users = usua.TraerUsuarios();
@@ -65,9 +67,6 @@ public class Admin extends javax.swing.JFrame {
         
     }
     
-    
-    
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -110,6 +109,11 @@ public class Admin extends javax.swing.JFrame {
 
         btnAbonar.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         btnAbonar.setText("ABONAR");
+        btnAbonar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAbonarActionPerformed(evt);
+            }
+        });
 
         lblWelcome.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         lblWelcome.setText(".");
@@ -177,6 +181,24 @@ public class Admin extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAbonarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbonarActionPerformed
+        
+         try {
+            clscuentausuario cuentausu = new clscuentausuario();
+            cuentasusuario cuentausua = new cuentasusuario();
+            
+            cuentausua.setIdUsuario(Integer.parseInt(ValueMember[cbxDepositante.getSelectedIndex()]));
+            cuentausua.setSaldo(Double.parseDouble(txtAbono.getText()));
+            cuentausua.setFecha(jDateChooser1.getDate());
+            cuentausua.setTransaccion(1);
+            cuentausu.agregarTransaccion(cuentausuar);
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "error");
+        }
+        
+    }//GEN-LAST:event_btnAbonarActionPerformed
 
     /**
      * @param args the command line arguments
