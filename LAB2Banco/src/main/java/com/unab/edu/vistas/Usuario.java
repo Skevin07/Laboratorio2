@@ -6,9 +6,11 @@
 package com.unab.edu.vistas;
 
 import com.unab.edu.DAO.clsUsuario;
+import com.unab.edu.dao.clscuentausuario;
 import com.unab.edu.entidades.cuentasUsuario;
 import com.unab.edu.entidades.usuario;
 import java.sql.Date;
+import java.util.Set;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -26,7 +28,8 @@ public class Usuario extends javax.swing.JFrame {
      */
     public Usuario() {
         initComponents();
-        
+        user=Loguin.usu;
+        lblWelcome.setText(user.getUsuario());
         MostrarTransaccion();
         setLocationRelativeTo(this);
         
@@ -34,8 +37,8 @@ public class Usuario extends javax.swing.JFrame {
     void MostrarTransaccion() {
         String TITULOS[] = {"SALDO", "TRANSACCIÓN", "FECHA"};
         DefaultTableModel modeloTabla = new DefaultTableModel(null, TITULOS);
-        cuentasUsuario transaccion = new cuentasUsuario();
-        var listado = transaccion.transaccion(user);
+        clscuentausuario transaccion = new clscuentausuario();
+        var listado = transaccion.Transacciones(user);
         String filas[] = new String[3];
         double abonos = 0;
         double cargos = 0;
@@ -82,6 +85,7 @@ public class Usuario extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         lblBienvenida2 = new javax.swing.JLabel();
         lblDisponible = new javax.swing.JLabel();
+        lblWelcome = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -149,6 +153,9 @@ public class Usuario extends javax.swing.JFrame {
         lblDisponible.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         lblDisponible.setText(".");
 
+        lblWelcome.setFont(new java.awt.Font("Times New Roman", 3, 14)); // NOI18N
+        lblWelcome.setText(".");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -168,14 +175,18 @@ public class Usuario extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btnRetirar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(lblRetiro, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(lbl$, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(txtRetiro, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addComponent(txtRetiro, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(14, 14, 14)
+                                                .addComponent(lblWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGap(18, 18, 18)
                                         .addComponent(lblSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -193,20 +204,23 @@ public class Usuario extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(lblBienvenida2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblRetiro)
-                    .addComponent(lbl$)
-                    .addComponent(txtRetiro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblSaldo)
-                    .addComponent(lblDisponible))
-                .addGap(18, 18, 18)
-                .addComponent(btnRetirar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblRetiro)
+                            .addComponent(lbl$)
+                            .addComponent(txtRetiro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblSaldo)
+                            .addComponent(lblDisponible))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnRetirar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblWelcome))
                 .addGap(20, 20, 20))
         );
 
@@ -215,15 +229,15 @@ public class Usuario extends javax.swing.JFrame {
 
     private void btnRetirarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetirarActionPerformed
 
-    boolean esNumero;
-        double retiro = 0;
-        clsUsuario transacciones = new clsUsuario();
+    boolean Numero;
+        double Retiro = 0;
+        clscuentausuario transacciones = new clscuentausuario();
         cuentasUsuario transaccion = new cuentasUsuario();
         try {
-            retiro = Double.parseDouble(txtRetiro.getText());
-            esNumero = true;
+            Retiro = Double.parseDouble(txtRetiro.getText());
+            Numero = true;
         } catch (Exception e) {
-            esNumero = false;
+            Numero = false;
         }
         Date date = new Date();
         SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd");
@@ -231,12 +245,12 @@ public class Usuario extends javax.swing.JFrame {
         //Primera implementacion de Fecha
 //        System.out.println(formato.format(date));
         //Validar si lo ingresado son numeros
-        if (txtRetiro.getText() != "" && retiro != 0) {
+        if (txtRetiro.getText() != "" && Retiro != 0) {
             //Validar que sea divisible entre 5
-            if (retiro % 5 == 0) {
+            if (Retiro % 5 == 0) {
                 //validad si tiene saldo disponible
-                if (retiro <= Saldo) {
-                    transaccion.setSaldo(retiro);
+                if (Retiro <= Saldo) {
+                    transaccion.setSaldo(Retiro);
                     transaccion.setIdUsuario(user.getIdUsuario());
                     transaccion.setTransaccion(2);
                     transacciones.agregarTransaccion(transaccion);
@@ -282,6 +296,7 @@ public class Usuario extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new Usuario().setVisible(true);
             }
@@ -302,6 +317,7 @@ public class Usuario extends javax.swing.JFrame {
     private javax.swing.JLabel lblDisponible;
     private javax.swing.JLabel lblRetiro;
     private javax.swing.JLabel lblSaldo;
+    private javax.swing.JLabel lblWelcome;
     private javax.swing.JTable tblUsuario;
     private javax.swing.JTextField txtRetiro;
     // End of variables declaration//GEN-END:variables
