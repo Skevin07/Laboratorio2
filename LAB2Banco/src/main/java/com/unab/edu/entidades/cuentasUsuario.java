@@ -15,7 +15,7 @@ import lombok.Data;
 @Data
 public class cuentasUsuario {
     private int idcuenta;
-    private float saldo;
+    private double saldo;
     private int transaccion;
     private int idUsuario;
     private Date fecha;

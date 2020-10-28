@@ -29,7 +29,7 @@ public class clscuentausuario {
     public void agregarTransaccion(cuentasUsuario transaccion) {
         try {
             CallableStatement statement = con.prepareCall("call sp_i_transaccion(?,?,?,?);");
-            statement.setFloat("pSaldo", transaccion.getSaldo());
+            statement.setDouble("pSaldo", transaccion.getSaldo());
             statement.setInt("pIdUsuario", transaccion.getIdUsuario());
             statement.setInt("pTransaccion", transaccion.getTransaccion());
             statement.setDate("pFecha", new java.sql.Date(transaccion.getFecha().getTime()));

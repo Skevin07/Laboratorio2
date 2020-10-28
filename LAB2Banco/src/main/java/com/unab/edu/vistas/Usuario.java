@@ -9,7 +9,8 @@ import com.unab.edu.DAO.clsUsuario;
 import com.unab.edu.dao.clscuentausuario;
 import com.unab.edu.entidades.cuentasUsuario;
 import com.unab.edu.entidades.usuario;
-import java.sql.Date;
+
+import java.util.Date;
 import java.util.Set;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
@@ -239,9 +240,9 @@ public class Usuario extends javax.swing.JFrame {
         } catch (Exception e) {
             Numero = false;
         }
-        Date dte = new Date();
+        Date fecha = new Date();
         SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd");
-        transaccion.setFecha(dte);
+        transaccion.setFecha(fecha);
         //Primera implementacion de Fecha
 //        System.out.println(formato.format(date));
         //Validar si lo ingresado son numeros
@@ -321,6 +322,9 @@ public class Usuario extends javax.swing.JFrame {
     private javax.swing.JTable tblUsuario;
     private javax.swing.JTextField txtRetiro;
     // End of variables declaration//GEN-END:variables
+
+    
+    
 
     
 }
