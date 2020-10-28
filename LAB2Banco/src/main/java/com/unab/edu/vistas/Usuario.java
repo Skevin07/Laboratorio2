@@ -239,9 +239,9 @@ public class Usuario extends javax.swing.JFrame {
         } catch (Exception e) {
             Numero = false;
         }
-        Date date = new Date();
+        Date dte = new Date();
         SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd");
-        transaccion.setFecha(date);
+        transaccion.setFecha(dte);
         //Primera implementacion de Fecha
 //        System.out.println(formato.format(date));
         //Validar si lo ingresado son numeros
@@ -260,7 +260,7 @@ public class Usuario extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "No se puede retirar más");
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Solo se permiten cantidades divisibles entre 5, ej:5, 10, 15...");
+                JOptionPane.showMessageDialog(null, "Solo se permiten cantidades divisibles entre 5");
             }
         } else {
             JOptionPane.showMessageDialog(null, "Ingrese cantidades válidas");

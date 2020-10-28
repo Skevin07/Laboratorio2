@@ -177,7 +177,7 @@ public class Loguin extends javax.swing.JFrame {
                 if(user.getUsuario()!=null){
                     JOptionPane.showMessageDialog(null, "Welcome " + user.getUsuario());
                 }else{
-                    JOptionPane.showMessageDialog(null, "No se encontró el usuario");
+                    JOptionPane.showMessageDialog(null,"No se encontró el usuario");
                 }
                 usu=user;
                 if (user.getTipoUsuario() == 1) {
