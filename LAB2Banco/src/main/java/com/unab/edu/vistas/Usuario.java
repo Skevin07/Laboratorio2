@@ -5,20 +5,59 @@
  */
 package com.unab.edu.vistas;
 
+import com.unab.edu.DAO.clsUsuario;
+import com.unab.edu.entidades.cuentasUsuario;
+import com.unab.edu.entidades.usuario;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author landa
  */
 public class Usuario extends javax.swing.JFrame {
 
+    double Saldo = 0;
+    usuario user;
     /**
      * Creates new form Usuario
      */
     public Usuario() {
         initComponents();
         
+        MostrarTransaccion();
+        setLocationRelativeTo(this);
+        
+    }
+    void MostrarTransaccion() {
+        String TITULOS[] = {"SALDO", "TRANSACCIÓN", "FECHA"};
+        DefaultTableModel modeloTabla = new DefaultTableModel(null, TITULOS);
+        cuentasUsuario transaccion = new cuentasUsuario();
+        var listado = transaccion.Transacciones(user);
+        String filas[] = new String[3];
+        double abonos = 0;
+        double cargos = 0;
+        for (var iterarDatos : listado) {
+            filas[0] = String.valueOf(iterarDatos.getSaldo());
+            if (iterarDatos.getTransaccion() == 1) {
+                filas[1] = "Abono";
+                abonos += iterarDatos.getSaldo();
+            } else {
+                filas[1] = "Cargo";
+                cargos += iterarDatos.getSaldo();
+            }
+            filas[2] = String.valueOf(iterarDatos.getFecha());
+            //Agregar a la fila
+            modeloTabla.addRow(filas);
+        }
+        Saldo = abonos - cargos;
+        tblUsuario.setModel(modeloTabla);
+        lblDisponible.setText(String.valueOf(Saldo));
     }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,6 +81,7 @@ public class Usuario extends javax.swing.JFrame {
         tblUsuario = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         lblBienvenida2 = new javax.swing.JLabel();
+        lblDisponible = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -73,6 +113,11 @@ public class Usuario extends javax.swing.JFrame {
 
         btnRetirar.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         btnRetirar.setText("RETIRAR");
+        btnRetirar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRetirarActionPerformed(evt);
+            }
+        });
 
         txtRetiro.setFont(new java.awt.Font("Yu Gothic Medium", 2, 10)); // NOI18N
 
@@ -100,6 +145,9 @@ public class Usuario extends javax.swing.JFrame {
 
         lblBienvenida2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblBienvenida2.setText("BANCO CENTRAL SALVADOREÑO");
+
+        lblDisponible.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        lblDisponible.setText(".");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -129,8 +177,10 @@ public class Usuario extends javax.swing.JFrame {
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(txtRetiro, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGap(18, 18, 18)
-                                        .addComponent(lblSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                        .addComponent(lblSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblDisponible, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(0, 42, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -149,7 +199,8 @@ public class Usuario extends javax.swing.JFrame {
                     .addComponent(lblRetiro)
                     .addComponent(lbl$)
                     .addComponent(txtRetiro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblSaldo))
+                    .addComponent(lblSaldo)
+                    .addComponent(lblDisponible))
                 .addGap(18, 18, 18)
                 .addComponent(btnRetirar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -161,6 +212,46 @@ public class Usuario extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnRetirarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetirarActionPerformed
+
+    boolean esNumero;
+        double retiro = 0;
+        clsUsuario transaccionDao = new clsUsuario();
+        cuentasUsuario transaccion = new cuentasUsuario();
+        try {
+            retiro = Double.parseDouble(txtRetiro.getText());
+            esNumero = true;
+        } catch (Exception e) {
+            esNumero = false;
+        }
+        Date date = new Date();
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd");
+        transaccion.setFecha(date);
+        //Primera implementacion de Fecha
+//        System.out.println(formato.format(date));
+        //Validar si lo ingresado son numeros
+        if (txtRetiro.getText() != "" && retiro != 0) {
+            //Validar que sea divisible entre 5
+            if (retiro % 5 == 0) {
+                //validad si tiene saldo disponible
+                if (retiro <= Saldo) {
+                    transaccion.setSaldo(retiro);
+                    transaccion.setIdUsuario(user.getIdUsuario());
+                    transaccion.setTransaccion(2);
+                    transaccionDao.agregarTransaccion(transaccion);
+                    MostrarTransaccion();
+                    txtRetiro.setText("");
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se puede retirar más");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Solo se permiten cantidades divisibles entre 5, ej:5, 10, 15...");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingrese cantidades válidas");
+        }
+    }//GEN-LAST:event_btnRetirarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -208,6 +299,7 @@ public class Usuario extends javax.swing.JFrame {
     private javax.swing.JLabel lblBienvenida;
     private javax.swing.JLabel lblBienvenida1;
     private javax.swing.JLabel lblBienvenida2;
+    private javax.swing.JLabel lblDisponible;
     private javax.swing.JLabel lblRetiro;
     private javax.swing.JLabel lblSaldo;
     private javax.swing.JTable tblUsuario;
